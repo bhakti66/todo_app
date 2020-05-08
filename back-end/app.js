@@ -15,6 +15,21 @@ var myLogger = function (req, res, next) {
   
 app.use(myLogger)
 app.use(bodyParser.json({limit:'10mb'}));
+
+app.use(function(req,res,next){
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Headers','Access-Control-Allow-Origin,x-app-key,content-type');
+  res.setHeader('Access-Control-Allow-Methods','POST,GET,PUT,DELETE');
+  res.setHeader('Access-Control-Expose-Headers', 'x-app-key,content-type');
+
+  if(req.method==="OPTIONS"){
+    res.send({status:200});
+  }
+  else{
+    next();
+  }
+});
+
 // User API's 
 
 app.post('/user/register',(req,res)=>{
@@ -26,12 +41,13 @@ app.post('/user/register',(req,res)=>{
 
     user.save(user).then((result)=>{
         if(result.affectedRows==1){
-            res.sendStatus(200);
+            res.send({status:200})
         }else{
             res.sendStatus(500)
         }
         
     },(err)=>{
+        console.error(err)
         res.sendStatus(500)
     });
     
@@ -44,11 +60,12 @@ app.post('/user/login',(req,res)=>{
     })
     user.login(user).then((result)=>{
         if(result.length>0){
-            res.sendStatus(200);
+            res.send({data:result,status:200});
         }else{
             res.sendStatus(404);    
         }
     },(err)=>{
+        console.error(err)
         res.sendStatus(500);
     })
 });
@@ -65,7 +82,7 @@ app.put('/user/modify',(req,res)=>{
     var user = new User(tmp)
     user.update(user).then((result)=>{
         if(result.affectedRows==1){
-            res.sendStatus(200);
+            res.send({status:200});
         }else{
             res.sendStatus(404);    
         }
@@ -87,7 +104,7 @@ app.post('/todo/add',(req,res)=>{
 
     task.save(task).then((result)=>{
         if(result.affectedRows==1){
-            res.sendStatus(200);
+            res.send({status:200});
         }
         else{
             res.sendStatus(500)
@@ -117,7 +134,7 @@ app.put('/todo/modify',(req,res)=>{
 
     task.update(task).then((result)=>{
         if(result.affectedRows==1){
-            res.sendStatus(200);
+            res.send({status:200});
         }
         else{
             res.sendStatus(500)
@@ -129,7 +146,7 @@ app.put('/todo/modify',(req,res)=>{
 
 app.get('/todo/view',(req,res)=>{
     var todo = new ToDo({
-        user_email : req.query.email
+        user_id : req.query.id
     })
     todo.view(todo).then((result)=>{
         res.send({data:result})
@@ -144,7 +161,7 @@ app.delete('/todo',(req,res)=>{
     })
     todo.delete(todo).then((result)=>{
         if(result.affectedRows==1){
-            res.sendStatus(200)
+            res.send({status:200})
         }
         else{
             res.sendStatus(500)

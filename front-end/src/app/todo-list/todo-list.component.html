@@ -1,0 +1,59 @@
+<div style="height: 100%; overflow:auto">
+    <div
+      class="padding"
+      *ngIf="testResults"
+      fxLayout="column"
+      fxLayoutAlign="stretch stretch"
+    >
+      <div fxLayout="row">
+        <mat-form-field fxFlex>
+          <input
+            matInput
+            placeholder="Filter by keywords"
+            [(ngModel)]="filterText"
+            (ngModelChange)="applyFilter(filterText)"
+          />
+          <button
+            mat-button
+            *ngIf="filterText"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="filterText = ''; applyFilter(filterText)"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-menu #appMenu="matMenu">
+          <button
+            mat-menu-item
+            [disabled]="selection.isEmpty()"
+            (click)="downloadTPD()"
+          >
+            Download Selected TPD
+          </button>
+        </mat-menu>
+  
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+      <table mat-table [dataSource]="testResults" matSort class="mat-elevation-z8">
+        <th>Sr No</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Status</th>
+
+        <tr *ngFor="let task of list;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task.date}}</td>
+            <td>{{task.status}}</td>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+  

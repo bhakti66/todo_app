@@ -1,0 +1,33 @@
+<div class="blue-gradient">
+    <form fxLayout="column" fxLayoutAlign="center center" (ngSubmit)="register()" [formGroup]="loginForm">
+        <mat-card class="loginCard">
+          <mat-card-title>
+            <span>Registeration</span>
+          </mat-card-title>
+          <mat-card-content>
+            <div fxLayout="column" fxLayoutAlign="center">
+              <mat-form-field fxFlex>
+                <mat-label>Username</mat-label>
+                <input matInput type="text" placeholder="Username" [formControl]="loginForm.controls['username']">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="Username" [formControl]="loginForm.controls['email']">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" [formControl]="loginForm.controls['password']">
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            Already Registered? <a  routerLink="/login" align="start end" class="forgotPassword">Login</a>
+            <button mat-raised-button type="submit" [disabled]="!loginForm.valid" color="accent">
+              Register
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+</div>
+
+  

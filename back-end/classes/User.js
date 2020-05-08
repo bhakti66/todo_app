@@ -47,7 +47,7 @@ class User {
 
     login(user) {
         return new Promise((resolve, reject) => {
-            var sql = "SELECT count(name) FROM `users` WHERE " +
+            var sql = "SELECT `id`,`name`,`email` FROM `users` WHERE " +
                 "(`email`='" + user.email + "' AND `password`=MD5('" + user.password + "'))"
             dbTransactions.dataOperation(sql).then((result) => {
                 resolve(result)

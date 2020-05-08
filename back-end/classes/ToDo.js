@@ -8,6 +8,7 @@ class ToDo{
         this.description = todoObject.description
         this.status = todoObject.status
         this.user_email = todoObject.user_email
+        this.user_id = todoObject.user_id
     }
 
     save(todo) {
@@ -50,7 +51,7 @@ class ToDo{
     view(todo) {
         return new Promise((resolve, reject) => {
             var sql = "SELECT * FROM `todo` WHERE " +
-                "`user_id`=(SELECT id from `users` WHERE email='" + todo.user_email+"')"
+                "`user_id`=" + todo.user_id+""
             dbTransactions.dataOperation(sql).then((result) => {
                 resolve(result)
             },(err)=>{
