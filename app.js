@@ -15,25 +15,6 @@ var myLogger = function (req, res, next) {
   
 app.use(myLogger)
 app.use(bodyParser.json({limit:'10mb'}));
-
-// app.use(function(req,res,next){
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-//   res.setHeader('Access-Control-Allow-Headers','Access-Control-Allow-Origin,x-app-key,content-type');
-//   res.setHeader('Access-Control-Allow-Methods','POST,GET,PUT,DELETE');
-//   res.setHeader('Access-Control-Expose-Headers', 'x-app-key,content-type');
-
-//   if(req.method==="OPTIONS"){
-//     res.send(200);
-//   }
-//   else{
-//     next();
-//   }
-// });
-
-
-
-
-
 // User API's 
 
 app.post('/user/register',(req,res)=>{
