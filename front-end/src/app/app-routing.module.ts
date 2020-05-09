@@ -6,8 +6,8 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { TodoListComponent } from './todo-list/todo-list.component'
 
 const routes: Routes = [
-  { path: "", component: RegistrationComponent },
-  { path: "login", component: LoginComponent },
+  { path: "", component:  LoginComponent},
+  { path: "register", component: RegistrationComponent },
   { path: "profile", component: UpdateProfileComponent },
   { path: "todolist", component: TodoListComponent }
   // { path: "", redirectTo: "/login", pathMatch: "full" }

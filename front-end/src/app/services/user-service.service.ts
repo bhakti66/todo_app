@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserServiceService {
-
   constructor() { }
+
+  checkLoggedIn(){
+    if(JSON.parse(localStorage.getItem("user"))){
+      return true
+    }
+    return false
+  }
 }

@@ -15,7 +15,7 @@ class ToDo{
         return new Promise((resolve, reject) => {
             var sql = "INSERT INTO `todo` (`title`, `description`, `status`, `date`,`user_id`) " +
                 "VALUES ('" + todo.title + "', '" + todo.description + "', '" + todo.status + "', NOW(), "+
-                "(SELECT id from `users` WHERE email='"+todo.user_email+"'));"
+                ""+todo.user_id+");"
             dbTransactions.dataOperation(sql).then((result) => {
                 resolve(result);
             },(err)=>{

@@ -1,11 +1,6 @@
 <div style="height: 100%; overflow:auto">
-    <div
-      class="padding"
-      *ngIf="testResults"
-      fxLayout="column"
-      fxLayoutAlign="stretch stretch"
-    >
-      <div fxLayout="row">
+  <div class="padding" fxLayout="column" fxLayoutAlign="stretch stretch">
+    <!-- <div fxLayout="row">
         <mat-form-field fxFlex>
           <input
             matInput
@@ -19,41 +14,104 @@
             matSuffix
             mat-icon-button
             aria-label="Clear"
-            (click)="filterText = ''; applyFilter(filterText)"
-          >
+            (click)="filterText = ''; applyFilter(filterText)">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
-        <mat-menu #appMenu="matMenu">
-          <button
-            mat-menu-item
-            [disabled]="selection.isEmpty()"
-            (click)="downloadTPD()"
-          >
-            Download Selected TPD
-          </button>
-        </mat-menu>
-  
-        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
+      </div> -->
+    <div fxLayout="row" *ngIf="!todoService.todolist || !todoService.todolist || !todoService.todolist.data || todoService.todolist.data.length==0">
+      <h3>To Do list not found.</h3>
+    </div>
+    <div fxLayout="row" style="padding:20px">
+      <div fxLayout="column" fxLayoutAlign="start" *ngIf="currentUser">
+        {{currentUser.name}}'s Todo list
+      </div>
+      <div fxLayout="column" fxLayoutAlign="end">
+        <button class="addButton">
+          <span class="material-icons action add" (click)="addRecord()">
+            add
+          </span>
         </button>
       </div>
-      <table mat-table [dataSource]="testResults" matSort class="mat-elevation-z8">
-        <th>Sr No</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Status</th>
-
-        <tr *ngFor="let task of list;let i=index">
-            <td>{{i+1}}</td>
-            <td>{{task.title}}</td>
-            <td>{{task.description}}</td>
-            <td>{{task.date}}</td>
-            <td>{{task.status}}</td>
-        </tr>
-
-      </table>
     </div>
+    <table mat-table [dataSource]="todoService.todolist" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>
+          ID
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span>{{ row.id }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>
+          Title
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="!isInEditMode">{{ row.title }}</span>
+          <input *ngIf="isInEditMode" matInput type="text" placeholder="Title" [(ngModel)]="updatedRow.title">
+        </td>
+        <!-- <td mat-cell *matCellDef="let row" >
+            <input *ngIf="isInEditMode" matInput type="text" placeholder="Title" [(value)]="row.title">
+        </td> -->
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>
+          Description
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="!isInEditMode">{{ row.description }}</span>
+          <textarea *ngIf="isInEditMode" matInput name="description" id="description" cols="30" rows="2" [(ngModel)]="updatedRow.description"></textarea>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>
+          Status
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="!isInEditMode"> {{ row.status }}</span>
+          <select name="dd_status" id="dd_status" [(ngModel)]="updatedRow.status" *ngIf="isInEditMode">
+              <option value="Holding">Holding</option>
+              <option value="Prioritized">Prioritized</option>
+              <option value="Started">Started</option>
+              <option value="Finished">Finished</option>
+            </select>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>
+          Date
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span>{{ row.date.split("T")[0] }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="edit" >
+        <th mat-header-cell *matHeaderCellDef>
+          <span *ngIf="!isInEditMode">Edit</span>
+          <span *ngIf="isInEditMode">Save</span>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span class="material-icons action edit" (click)="editRecord(row)" *ngIf="!isInEditMode">
+            edit
+          </span>
+          <span class="material-icons action edit" (click)="updateRecord(row)" *ngIf="isInEditMode">
+              check_circle
+            </span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete" *ngIf="!isInEditMode">
+        <th mat-header-cell *matHeaderCellDef>
+            <span *ngIf="!isInEditMode">Delete</span>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span class="material-icons action delete" (click)="deleteRecord(row)" *ngIf="!isInEditMode">
+            delete
+          </span>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
-  
+</div>

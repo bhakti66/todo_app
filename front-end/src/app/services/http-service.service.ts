@@ -25,7 +25,7 @@ export class HttpServiceService {
     return this.http.put(this.apiUrl+path,data).pipe()
   }
 
-  delete(path,data) {
-    return this.http.delete(this.apiUrl+path,data).pipe()
+  delete(path) {
+    return this.http.delete(this.apiUrl+path).pipe()
   }
 }

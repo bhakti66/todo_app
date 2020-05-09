@@ -8,6 +8,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { AddTodoItemComponent } from './add-todo-item/add-todo-item.component';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { FlexLayoutModule, CoreModule } from "@angular/flex-layout";
 import { MaterialModule } from "./material.module";
@@ -21,7 +22,8 @@ import { HttpServiceService } from './services/http-service.service'
     RegistrationComponent,
     LoginComponent,
     UpdateProfileComponent,
-    TodoListComponent
+    TodoListComponent,
+    AddTodoItemComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,7 @@ import { HttpServiceService } from './services/http-service.service'
   providers: [
     HttpServiceService
   ],
+  entryComponents: [AddTodoItemComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

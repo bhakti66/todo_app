@@ -1,0 +1,20 @@
+.action:hover{
+    cursor: pointer;
+}
+
+.edit:hover{
+    color:orange
+}
+
+.delete:hover{
+    color:red
+}
+
+.addButton:hover{
+    background-color: cornflowerblue
+}
+
+.addButton{
+    border-radius: 25%;
+    background-color: aqua
+}

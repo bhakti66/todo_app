@@ -99,12 +99,12 @@ app.post('/todo/add',(req,res)=>{
         "title" : req.body.title,
         "description" : req.body.description,
         "status" : req.body.status,
-        "user_email" : req.body.user_email
+        "user_id" : req.body.user_id
     });
 
     task.save(task).then((result)=>{
         if(result.affectedRows==1){
-            res.send({status:200});
+            res.send({data:task});
         }
         else{
             res.sendStatus(500)
